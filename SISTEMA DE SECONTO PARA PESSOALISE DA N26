@@ -1,0 +1,74 @@
+import tkinter as tk
+from tkinter import ttk
+
+def calcular_desconto():
+    valor = float(valor_entry.get())
+    resposta = metodo_combobox.get()
+
+    resultado_text.delete(1.0, tk.END)  # Limpar o texto anterior
+
+    if resposta == 'À VISTA / + 31 DIAS':
+        desconto = 0.3 * valor
+        total = valor - desconto
+        resultado_text.insert(tk.END, f"O valor é R$ {valor}\n")
+        resultado_text.insert(tk.END, f"Seu desconto com o pagamento à vista de R$ {desconto}\n")
+        resultado_text.insert(tk.END, f"A conta total é de {total}")
+
+    elif resposta == 'À VISTA / - 31 DIAS':
+        desconto = 0.2 * valor
+        total = valor - desconto
+        resultado_text.insert(tk.END, f"O valor da sua conta é R$: {valor}\n")
+        resultado_text.insert(tk.END, f"O seu desconto com o pagamento à vista é de R$ {desconto}\n")
+        resultado_text.insert(tk.END, f"O total do débito é de R$ {total}")
+
+    elif resposta == 'PARCELADO EM 2X':
+        porcentagem_entrada = float(entrada_entry.get())
+        entrada = valor * (porcentagem_entrada / 100)
+        o = valor - entrada
+        parcela = o / 2
+        resultado_text.insert(tk.END, f"O valor da sua conta é de R$ {valor}\n")
+        resultado_text.insert(tk.END, f"O valor da entrada é de R$ {entrada}\n")
+        resultado_text.insert(tk.END, f"O valor é 2x de R$ {parcela}")
+
+    elif resposta == 'PARCELADO EM 3X':
+        porcentagem_entrada = float(entrada_entry.get())
+        entrada = valor * (porcentagem_entrada / 100)
+        l = valor - entrada
+        parcela = l / 3
+        resultado_text.insert(tk.END, f"O valor da sua conta é de R$ {valor}\n")
+        resultado_text.insert(tk.END, f"O valor da entrada é de R$ {entrada}\n")
+        resultado_text.insert(tk.END, f"O valor fica 3x de R$ {parcela}")
+
+# Configuração da interface
+root = tk.Tk()
+root.title("Sistema de Desconto do Zezin")
+
+main_frame = ttk.Frame(root, padding="20")
+main_frame.grid(row=0, column=0)
+
+# Widgets
+titulo_label = ttk.Label(main_frame, text="SISTEMA DE DESCONTO DO ZEZIN")
+titulo_label.grid(row=0, column=0, columnspan=2, pady=10)
+
+valor_label = ttk.Label(main_frame, text="Valor a ser pago (R$):")
+valor_label.grid(row=1, column=0, sticky="e")
+valor_entry = ttk.Entry(main_frame)
+valor_entry.grid(row=1, column=1, pady=5)
+
+metodo_label = ttk.Label(main_frame, text="Método de pagamento:")
+metodo_label.grid(row=2, column=0, sticky="e")
+metodo_combobox = ttk.Combobox(main_frame, values=['À VISTA / + 31 DIAS', 'À VISTA / - 31 DIAS', 'PARCELADO EM 2X', 'PARCELADO EM 3X'])
+metodo_combobox.grid(row=2, column=1, pady=5)
+
+entrada_label = ttk.Label(main_frame, text="Porcentagem de entrada (0-100):")
+entrada_label.grid(row=3, column=0, sticky="e")
+entrada_entry = ttk.Entry(main_frame)
+entrada_entry.grid(row=3, column=1, pady=5)
+
+calcular_button = ttk.Button(main_frame, text="Calcular", command=calcular_desconto)
+calcular_button.grid(row=4, column=0, columnspan=2, pady=10)
+
+resultado_text = tk.Text(main_frame, width=40, height=10)
+resultado_text.grid(row=5, column=0, columnspan=2, pady=5)
+
+root.mainloop()
