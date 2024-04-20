@@ -1,0 +1,21 @@
+from PySide6 import QtCore, QtGui, QtWidgets
+from ui_main import Ui_MainWindow
+   
+class Teste(Ui_MainWindow):
+    def __init__(self,main_ui) -> None:
+        self.setupUi(main_ui)
+        self.pushButton.clicked.connect(lambda: self.clicado())
+
+    def clicado(self):
+        texto = self.lineEdit.text()
+        self.label.setText(texto)
+        
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+ 
+    aaa = Teste(MainWindow)
+  
+    MainWindow.show()
+    sys.exit(app.exec_())
